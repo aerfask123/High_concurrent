@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: xxl-job-demo
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/db01?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+  main:
+    allow-circular-references: true
+  profiles:
+    active: test
+server:
+  port: 8081
+---
+xxl:
+  job:
+    executor:
+      appname: ${spring.application.name}
+      logpath: ${spring.application.name}/xxl-job
+      logretentiondays: 30
+    admin:
+      addresses: http://127.0.0.1:8085/xxl-job-admin
+      # accessToken: default_token
+spring:
+  config:
+    activate:
+      on-profile: dev
+---
+xxl:
+  job:
+    executor:
+      appname: ${spring.application.name}
+      logpath: ${spring.application.name}/xxl-job
+      logretentiondays: 30
+    admin:
+      addresses: http://192.168.3.223:8085/xxl-job-admin
+      # accessToken: default_token
+spring:
+  config:
+    activate:
+      on-profile: test
